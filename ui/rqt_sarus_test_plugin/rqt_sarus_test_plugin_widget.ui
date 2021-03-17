@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>380</width>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,11 +46,31 @@
     </rect>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="speedText">
+  <widget class="QTextBrowser" name="speedxText">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>230</y>
+     <y>300</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>250</y>
+     <width>181</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="speedyText">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>300</y>
      <width>121</width>
      <height>31</height>
     </rect>
