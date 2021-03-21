@@ -15,24 +15,23 @@ TestPluginWidget::TestPluginWidget(QWidget *parent) :
     ui->setupUi(this);
 
     timer_1s = new QTimer(this);
-    QObject::connect(timer_1s, SIGNAL(timeout()), this, SLOT(Update()));
+    QObject::connect(timer_1s, SIGNAL(timeout()), this, SLOT(Update_Display()));
     timer_1s->start(500);
 
-    std::string dron;
+    std::string drone;
     for(int i=0; i<num_Drones; i++){
-        dron = std::to_string(i);
-        ui->comboBox->addItem(dron.c_str());
+        drone = std::to_string(i);
+        ui->comboBox->addItem(drone.c_str());
     }
 }
 
 TestPluginWidget::~TestPluginWidget()
 {
     // Write exit code here
-
     delete ui;
 }
 
-void TestPluginWidget::Update() {
+void TestPluginWidget::Update_Display() {
     std::string speed;
 
     QString currentDron;
@@ -45,13 +44,8 @@ void TestPluginWidget::Update() {
         speed = std::to_string(dronSpeed_y);
         ui->speedyText->setText(speed.c_str());
     }
-
-    ui->subText->setText(sub_message.c_str());
 }
 
-void TestPluginWidget::ros_data_callback(const std_msgs::String::ConstPtr &msg){
-    this->sub_message = msg->data.c_str();
-}
 
 void TestPluginWidget::ros_speedx_callback(const geometry_msgs::TwistStamped::ConstPtr &vx){
     this->dronSpeed_x = vx->twist.linear.x;
@@ -63,10 +57,12 @@ void TestPluginWidget::ros_speedy_callback(const geometry_msgs::TwistStamped::Co
 
 void TestPluginWidget::init_ROS_Node()
 {
-    cont = 0;
-    // Write initialization code here (publishers, subscribers)
+    // Write initialization code here
+
+    // PUBLISHERS
     buttonPublisher = ros_node_handle.advertise<std_msgs::String>("my_data",1);
-    my_subscriber = ros_node_handle.subscribe("my_data", 1, &TestPluginWidget::ros_data_callback, this);
+
+    // SUBSCRIBERS
     speedx = ros_node_handle.subscribe("/drone107/motion_reference/speed", 1, &TestPluginWidget::ros_speedx_callback, this);
     speedy = ros_node_handle.subscribe("/drone107/motion_reference/speed", 1, &TestPluginWidget::ros_speedy_callback, this);
 }
@@ -74,9 +70,8 @@ void TestPluginWidget::init_ROS_Node()
 void TestPluginWidget::on_pushButton_clicked()
 {
     // Button clicked callback
-    cont++;
     std_msgs::String message;
-    message.data = std::to_string(cont);
+    message.data = "Hello World!";
     buttonPublisher.publish(message);
     ui->pubText->setText(message.data.c_str());
 }

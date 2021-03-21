@@ -23,30 +23,32 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    void Update();
+    void Update_Display();
 
 
 private:
     Ui::TestPluginWidget *ui;
 
+    // Node Handle
     ros::NodeHandle ros_node_handle;
-    ros::Subscriber my_subscriber;
+
+    // Publishers
+    ros::Publisher buttonPublisher;
+
+    // Subscribers
     ros::Subscriber speedx;
     ros::Subscriber speedy;
-    ros::Publisher buttonPublisher;
-    void ros_data_callback(const std_msgs::String::ConstPtr &msg);
+
+    // Subscribers callbacks
     void ros_speedx_callback(const geometry_msgs::TwistStamped::ConstPtr &vx);
     void ros_speedy_callback(const geometry_msgs::TwistStamped::ConstPtr &vy);
 
-    //Variables
-    std::string sub_message = "";
+    // Variables
     float dronSpeed_x;
     float dronSpeed_y;
     int num_Drones = 2;
 
     QTimer *timer_1s;
-
-    int cont;
 
 };
 
